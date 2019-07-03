@@ -1,28 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <RecycleScroller
+    class="photo-scroller"
+    :items="photos"
+    :item-size="180"
+    key-field="id"
+    v-slot="{ item, index }"
+  >
+    <photo :item="item" :count="photos.length" :index="index+1" />
+  </RecycleScroller>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Photo from './components/Photo'
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  components: { Photo },
+  data() {
+    return {
+      photos: [],
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    async loadData() {
+      const url = 'https://jsonplaceholder.typicode.com/photos'
+      const photos = await fetch(url).then(res => res.json())
+      this.photos = [...photos, ...photos, ...photos]
+    },
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+/** Height */
+.photo-scroller {
+  height: 100vh;
 }
 </style>
