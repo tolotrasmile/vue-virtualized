@@ -28,13 +28,21 @@ export default {
 <style scoped>
 /** Styling each items*/
 .photo {
-  padding: 1em;
+  margin: 1em;
   display: flex;
   justify-content: flex-start;
+  border-radius: 1em;
+  transition: box-shadow 0.5s, transform 5s;
+}
+
+.photo:hover {
+  box-shadow: 10px 10px 15px -4px rgba(0, 0, 0, 0.31);
 }
 
 .content {
   padding: 1em;
+  width: 100%;
+  background-color: #f5f5f5;
 }
 
 h4 {
